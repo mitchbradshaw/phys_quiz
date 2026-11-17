@@ -96,6 +96,8 @@ Advanced
 - [ ] 3 Black holes aren't black (Hawking radiation)
 
 Milestones
-- [x] Slice built: shell + blocks B3 and B10
+- [x] Slice built: shell + blocks B3 and B10 (verified in the browser: dark + light themes, deep links, what-if
+      "Show me", orbit/escape/landing shots, no console errors)
 - [ ] Slice reviewed by the user
-- [ ] GitHub Pages switched on
+- [ ] GitHub Pages switched on (needs the user: Settings → Pages → Source: GitHub Actions; the workflow already
+      skips the deploy until then, and deploys automatically on the next push after it is on)

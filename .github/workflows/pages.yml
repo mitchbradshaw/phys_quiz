@@ -1,5 +1,6 @@
-# Type-checks, runs the physics tests, builds the single-file site and publishes index.html to GitHub Pages.
-# Pages must be switched on (Settings → Pages → Source: GitHub Actions).
+# Type-checks, runs the physics tests and builds the single-file site on every push to main. If GitHub Pages is
+# switched on (Settings → Pages → Source: GitHub Actions) it also publishes index.html; until then the deploy is
+# skipped rather than failing.
 name: Test and deploy to GitHub Pages
 
 on:
@@ -19,6 +20,8 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    outputs:
+      pages: ${{ steps.pages.outputs.enabled }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -29,14 +32,28 @@ jobs:
       - run: node scripts/typecheck.mjs
       - run: node scripts/test.mjs
       - run: node scripts/build.mjs
+      - id: pages
+        name: Is GitHub Pages switched on?
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if gh api "repos/${{ github.repository }}/pages" > /dev/null 2>&1; then
+            echo "enabled=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "enabled=false" >> "$GITHUB_OUTPUT"
+            echo "::notice::GitHub Pages is not switched on yet (Settings > Pages > Source: GitHub Actions), so the deploy is skipped."
+          fi
       - name: Stage the site (just the built page)
+        if: steps.pages.outputs.enabled == 'true'
         run: mkdir -p site && cp index.html site/index.html
       - uses: actions/upload-pages-artifact@v3
+        if: steps.pages.outputs.enabled == 'true'
         with:
           path: site
 
   deploy:
     needs: build
+    if: needs.build.outputs.pages == 'true'
     runs-on: ubuntu-latest
     environment:
       name: github-pages

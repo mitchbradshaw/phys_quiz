@@ -64,7 +64,7 @@ function pathD(s: Screen, count: number): string {
   return d;
 }
 
-const fmtDuration = (sec: number) => (sec < 5400 ? `${Math.round(sec / 60)} min` : sec < 3 * 86400 ? `${(sec / 3600).toFixed(1)} h` : `${(sec / 86400).toFixed(1)} days`);
+const fmtDuration = (sec: number) => (sec < 3 * 3600 ? `${Math.round(sec / 60)} min` : sec < 3 * 86400 ? `${(sec / 3600).toFixed(1)} h` : `${(sec / 86400).toFixed(1)} days`);
 
 function describe(shot: Shot | undefined, body: Body): string {
   if (!shot) return 'Press **Fire!**';
