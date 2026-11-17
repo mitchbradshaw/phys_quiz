@@ -76,7 +76,7 @@ Beginner (high school)
 - [x] 3 Speed is a slope, distance is an area
 - [x] 4 Forces: arrows that change motion (Newton 1 & 2, net force; replaces "A push in empty space")
 - [x] 5 The stranded astronaut (momentum, Newton 3, rockets)
-- [ ] 6 Energy: the currency of motion
+- [x] 6 Energy: the currency of motion
 - [ ] 7 Projectiles on other worlds
 - [ ] 8 Going in circles
 - [ ] 9 Newton's gravity (Newton 3 again)
