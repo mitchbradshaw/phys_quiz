@@ -1,4 +1,5 @@
 // The three levels and their blocks, in story order. Blocks without a Sim show as "being built".
+import { arrows } from '../blocks/beginner/Arrows';
 import { forces } from '../blocks/beginner/Forces';
 import { motionGraphs } from '../blocks/beginner/MotionGraphs';
 import { powersOfTen } from '../blocks/beginner/PowersOfTen';
@@ -15,7 +16,7 @@ export const LEVELS: LevelDef[] = [
     where: 'Senior high-school physics (the QCAA formula sheet’s “Linear motion and force” and “Gravity and motion”).',
     blocks: [
       powersOfTen,
-      soon('arrows', 'Arrows: velocity has a direction', 'Why can a thing move at a perfectly steady speed and still be accelerating?'),
+      arrows,
       motionGraphs,
       forces,
       soon('stranded-astronaut', 'The stranded astronaut', 'How do you move when there is nothing to push against?'),

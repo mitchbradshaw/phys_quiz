@@ -72,7 +72,7 @@ tests + build. Preview: `.claude/launch.json` → `node scripts/serve.mjs` on po
 
 Beginner (high school)
 - [x] 1 Powers of ten (toolkit)
-- [ ] 2 Arrows: velocity has a direction (toolkit)
+- [x] 2 Arrows: velocity has a direction (toolkit)
 - [x] 3 Speed is a slope, distance is an area
 - [x] 4 Forces: arrows that change motion (Newton 1 & 2, net force; replaces "A push in empty space")
 - [ ] 5 The stranded astronaut (momentum, Newton 3, rockets)
