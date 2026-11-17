@@ -4,6 +4,7 @@ import { energy } from '../blocks/beginner/Energy';
 import { forces } from '../blocks/beginner/Forces';
 import { motionGraphs } from '../blocks/beginner/MotionGraphs';
 import { powersOfTen } from '../blocks/beginner/PowersOfTen';
+import { projectiles } from '../blocks/beginner/Projectiles';
 import { strandedAstronaut } from '../blocks/beginner/StrandedAstronaut';
 import { newtonsCannon } from '../blocks/beginner/NewtonsCannon';
 import type { BlockDef, LevelDef } from './types';
@@ -23,7 +24,7 @@ export const LEVELS: LevelDef[] = [
       forces,
       strandedAstronaut,
       energy,
-      soon('projectiles', 'Projectiles on other worlds', 'Why do a dropped ball and a ball fired sideways hit the ground at the same moment?'),
+      projectiles,
       soon('circles', 'Going in circles', 'If nothing is pushing a spinning thing outwards, what does the string actually do?'),
       soon('newtons-gravity', "Newton's gravity", 'When you jump, does the Earth move too?'),
       newtonsCannon,

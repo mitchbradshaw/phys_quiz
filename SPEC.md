@@ -77,7 +77,7 @@ Beginner (high school)
 - [x] 4 Forces: arrows that change motion (Newton 1 & 2, net force; replaces "A push in empty space")
 - [x] 5 The stranded astronaut (momentum, Newton 3, rockets)
 - [x] 6 Energy: the currency of motion
-- [ ] 7 Projectiles on other worlds
+- [x] 7 Projectiles on other worlds
 - [ ] 8 Going in circles
 - [ ] 9 Newton's gravity (Newton 3 again)
 - [x] 10 Newton's cannon
