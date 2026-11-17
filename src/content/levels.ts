@@ -8,6 +8,7 @@ import { motionGraphs } from '../blocks/beginner/MotionGraphs';
 import { powersOfTen } from '../blocks/beginner/PowersOfTen';
 import { projectiles } from '../blocks/beginner/Projectiles';
 import { strandedAstronaut } from '../blocks/beginner/StrandedAstronaut';
+import { ellipses } from '../blocks/medium/Ellipses';
 import { tinySteps } from '../blocks/medium/TinySteps';
 import { newtonsCannon } from '../blocks/beginner/NewtonsCannon';
 import { newtonsGravity } from '../blocks/beginner/NewtonsGravity';
@@ -42,7 +43,7 @@ export const LEVELS: LevelDef[] = [
     where: 'First-year university physics and introductory astrophysics.',
     blocks: [
       tinySteps,
-      soon('ellipses', 'Orbits are ellipses', 'Why are orbits stretched loops rather than circles, and what decides the stretch?'),
+      ellipses,
       soon('dancing-partners', 'Dancing partners', 'Does anything really orbit anything else?'),
       soon('hohmann', 'To catch up, slow down', 'Why does a spacecraft chasing another one in orbit have to brake to catch it?'),
       soon('gravity-assist', 'Gravity assists', 'How does a spacecraft steal speed from a planet, and who pays for it?'),
