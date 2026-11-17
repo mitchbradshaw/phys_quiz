@@ -1,4 +1,5 @@
 // The three levels and their blocks, in story order. Blocks without a Sim show as "being built".
+import { anatomy } from '../blocks/advanced/Anatomy';
 import { arrows } from '../blocks/beginner/Arrows';
 import { circles } from '../blocks/beginner/Circles';
 import { energy } from '../blocks/beginner/Energy';
@@ -66,7 +67,7 @@ export const LEVELS: LevelDef[] = [
     subtitle: 'black holes',
     where: 'Postgraduate territory: general relativity and quantum effects near black holes, kept to what you can see and measure.',
     blocks: [
-      soon('black-hole-anatomy', 'Anatomy of a black hole', 'What is actually at the edge of a black hole, and what happens to light that passes close by?'),
+      anatomy,
       soon('falling-in', 'Falling in', 'What would you see, and feel, falling into a black hole, and what would someone watching from far away see?'),
       soon('hawking-radiation', "Black holes aren't black", 'How can something nothing escapes from slowly evaporate?'),
     ],

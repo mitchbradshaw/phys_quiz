@@ -95,7 +95,7 @@ Medium (first-year uni)
 - [x] 9 Space-time diagrams and the twin paradox (SR)
 
 Advanced
-- [ ] 1 Anatomy of a black hole
+- [x] 1 Anatomy of a black hole
 - [ ] 2 Falling in
 - [ ] 3 Black holes aren't black (Hawking radiation)
 
