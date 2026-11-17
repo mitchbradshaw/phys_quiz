@@ -108,5 +108,5 @@ Milestones
       console errors, no placeholders, 47 "where" lists, 69 what-ifs; all 310 TeX snippets in the sources render in
       KaTeX; 18 physics tests pass. Animations were spot-checked only while the browser pane was visible (several
       blocks were checked through readouts instead, since a hidden pane pauses animation frames).
-- [ ] GitHub Pages switched on (needs the user: Settings → Pages → Source: GitHub Actions; the workflow already
-      skips the deploy until then, and deploys automatically on the next push after it is on)
+- [x] GitHub Pages switched on (2026-11-18, via gh, Source: GitHub Actions): live at
+      https://mitchbradshaw.github.io/phys_quiz/ ; every push to main tests, builds and redeploys it
