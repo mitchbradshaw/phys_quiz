@@ -78,7 +78,7 @@ Beginner (high school)
 - [x] 5 The stranded astronaut (momentum, Newton 3, rockets)
 - [x] 6 Energy: the currency of motion
 - [x] 7 Projectiles on other worlds
-- [ ] 8 Going in circles
+- [x] 8 Going in circles
 - [ ] 9 Newton's gravity (Newton 3 again)
 - [x] 10 Newton's cannon
 - [ ] 11 Kepler's third law: weighing the Sun

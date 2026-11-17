@@ -1,5 +1,6 @@
 // The three levels and their blocks, in story order. Blocks without a Sim show as "being built".
 import { arrows } from '../blocks/beginner/Arrows';
+import { circles } from '../blocks/beginner/Circles';
 import { energy } from '../blocks/beginner/Energy';
 import { forces } from '../blocks/beginner/Forces';
 import { motionGraphs } from '../blocks/beginner/MotionGraphs';
@@ -25,7 +26,7 @@ export const LEVELS: LevelDef[] = [
       strandedAstronaut,
       energy,
       projectiles,
-      soon('circles', 'Going in circles', 'If nothing is pushing a spinning thing outwards, what does the string actually do?'),
+      circles,
       soon('newtons-gravity', "Newton's gravity", 'When you jump, does the Earth move too?'),
       newtonsCannon,
       soon('kepler-three', "Kepler's third law: weighing the Sun", 'How can a stopwatch weigh a star?'),
