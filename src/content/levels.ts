@@ -8,6 +8,7 @@ import { powersOfTen } from '../blocks/beginner/PowersOfTen';
 import { projectiles } from '../blocks/beginner/Projectiles';
 import { strandedAstronaut } from '../blocks/beginner/StrandedAstronaut';
 import { newtonsCannon } from '../blocks/beginner/NewtonsCannon';
+import { newtonsGravity } from '../blocks/beginner/NewtonsGravity';
 import type { BlockDef, LevelDef } from './types';
 
 const soon = (id: string, title: string, hook: string): BlockDef => ({ id, title, hook });
@@ -27,7 +28,7 @@ export const LEVELS: LevelDef[] = [
       energy,
       projectiles,
       circles,
-      soon('newtons-gravity', "Newton's gravity", 'When you jump, does the Earth move too?'),
+      newtonsGravity,
       newtonsCannon,
       soon('kepler-three', "Kepler's third law: weighing the Sun", 'How can a stopwatch weigh a star?'),
     ],
