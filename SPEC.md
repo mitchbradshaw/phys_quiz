@@ -104,5 +104,9 @@ Milestones
       "Show me", orbit/escape/landing shots, no console errors)
 - [x] Slice reviewed by the user (approved; asked for the Forces block, "where" lists, colours by meaning, no
       square-root aside)
+- [x] All 23 blocks built (Beginner 11, Medium 9, Advanced 3). Final sweep: every level page renders with no
+      console errors, no placeholders, 47 "where" lists, 69 what-ifs; all 310 TeX snippets in the sources render in
+      KaTeX; 18 physics tests pass. Animations were spot-checked only while the browser pane was visible (several
+      blocks were checked through readouts instead, since a hidden pane pauses animation frames).
 - [ ] GitHub Pages switched on (needs the user: Settings → Pages → Source: GitHub Actions; the workflow already
       skips the deploy until then, and deploys automatically on the next push after it is on)
