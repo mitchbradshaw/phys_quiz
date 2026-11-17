@@ -3,6 +3,7 @@ import { arrows } from '../blocks/beginner/Arrows';
 import { circles } from '../blocks/beginner/Circles';
 import { energy } from '../blocks/beginner/Energy';
 import { forces } from '../blocks/beginner/Forces';
+import { kepler } from '../blocks/beginner/Kepler';
 import { motionGraphs } from '../blocks/beginner/MotionGraphs';
 import { powersOfTen } from '../blocks/beginner/PowersOfTen';
 import { projectiles } from '../blocks/beginner/Projectiles';
@@ -30,7 +31,7 @@ export const LEVELS: LevelDef[] = [
       circles,
       newtonsGravity,
       newtonsCannon,
-      soon('kepler-three', "Kepler's third law: weighing the Sun", 'How can a stopwatch weigh a star?'),
+      kepler,
     ],
   },
   {

@@ -81,7 +81,7 @@ Beginner (high school)
 - [x] 8 Going in circles
 - [x] 9 Newton's gravity (Newton 3 again)
 - [x] 10 Newton's cannon
-- [ ] 11 Kepler's third law: weighing the Sun
+- [x] 11 Kepler's third law: weighing the Sun
 
 Medium (first-year uni)
 - [ ] 1 How computers predict orbits (introduces d/dt and ∫)
