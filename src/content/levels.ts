@@ -8,6 +8,7 @@ import { motionGraphs } from '../blocks/beginner/MotionGraphs';
 import { powersOfTen } from '../blocks/beginner/PowersOfTen';
 import { projectiles } from '../blocks/beginner/Projectiles';
 import { strandedAstronaut } from '../blocks/beginner/StrandedAstronaut';
+import { tinySteps } from '../blocks/medium/TinySteps';
 import { newtonsCannon } from '../blocks/beginner/NewtonsCannon';
 import { newtonsGravity } from '../blocks/beginner/NewtonsGravity';
 import type { BlockDef, LevelDef } from './types';
@@ -40,7 +41,7 @@ export const LEVELS: LevelDef[] = [
     subtitle: 'orbits, escape and relativity',
     where: 'First-year university physics and introductory astrophysics.',
     blocks: [
-      soon('tiny-steps', 'How computers predict orbits', 'If gravity changes at every point of an orbit, how can anyone predict where a planet will be in a hundred years?'),
+      tinySteps,
       soon('ellipses', 'Orbits are ellipses', 'Why are orbits stretched loops rather than circles, and what decides the stretch?'),
       soon('dancing-partners', 'Dancing partners', 'Does anything really orbit anything else?'),
       soon('hohmann', 'To catch up, slow down', 'Why does a spacecraft chasing another one in orbit have to brake to catch it?'),

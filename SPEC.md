@@ -84,7 +84,7 @@ Beginner (high school)
 - [x] 11 Kepler's third law: weighing the Sun
 
 Medium (first-year uni)
-- [ ] 1 How computers predict orbits (introduces d/dt and ∫)
+- [x] 1 How computers predict orbits (introduces d/dt and ∫)
 - [ ] 2 Orbits are ellipses
 - [ ] 3 Dancing partners (3D, frames, helices)
 - [ ] 4 To catch up, slow down (Hohmann)
