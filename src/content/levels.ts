@@ -12,6 +12,7 @@ import { dancingPartners } from '../blocks/medium/DancingPartners';
 import { ellipses } from '../blocks/medium/Ellipses';
 import { gravityAssist } from '../blocks/medium/GravityAssist';
 import { gravityWells } from '../blocks/medium/GravityWells';
+import { lightClock } from '../blocks/medium/LightClock';
 import { hohmann } from '../blocks/medium/Hohmann';
 import { tides } from '../blocks/medium/Tides';
 import { tinySteps } from '../blocks/medium/TinySteps';
@@ -54,7 +55,7 @@ export const LEVELS: LevelDef[] = [
       gravityAssist,
       tides,
       gravityWells,
-      soon('light-clock', 'The light clock', 'If everyone measures the same speed of light, whose clock is running slow?'),
+      lightClock,
       soon('spacetime', 'Space-time diagrams and the twin paradox', 'Why does the twin who travels come home younger, when each sees the other moving?'),
     ],
   },

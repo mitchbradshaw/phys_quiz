@@ -91,7 +91,7 @@ Medium (first-year uni)
 - [x] 5 Gravity assists
 - [x] 6 Tides and the Roche limit
 - [x] 7 Gravity wells and dark stars (escape velocity, ∫ of work)
-- [ ] 8 The light clock (SR)
+- [x] 8 The light clock (SR)
 - [ ] 9 Space-time diagrams and the twin paradox (SR)
 
 Advanced
