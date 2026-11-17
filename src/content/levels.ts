@@ -1,5 +1,6 @@
 // The three levels and their blocks, in story order. Blocks without a Sim show as "being built".
 import { anatomy } from '../blocks/advanced/Anatomy';
+import { fallingIn } from '../blocks/advanced/FallingIn';
 import { arrows } from '../blocks/beginner/Arrows';
 import { circles } from '../blocks/beginner/Circles';
 import { energy } from '../blocks/beginner/Energy';
@@ -68,7 +69,7 @@ export const LEVELS: LevelDef[] = [
     where: 'Postgraduate territory: general relativity and quantum effects near black holes, kept to what you can see and measure.',
     blocks: [
       anatomy,
-      soon('falling-in', 'Falling in', 'What would you see, and feel, falling into a black hole, and what would someone watching from far away see?'),
+      fallingIn,
       soon('hawking-radiation', "Black holes aren't black", 'How can something nothing escapes from slowly evaporate?'),
     ],
   },

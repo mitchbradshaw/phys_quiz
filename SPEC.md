@@ -96,7 +96,7 @@ Medium (first-year uni)
 
 Advanced
 - [x] 1 Anatomy of a black hole
-- [ ] 2 Falling in
+- [x] 2 Falling in
 - [ ] 3 Black holes aren't black (Hawking radiation)
 
 Milestones
