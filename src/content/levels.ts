@@ -1,6 +1,7 @@
 // The three levels and their blocks, in story order. Blocks without a Sim show as "being built".
 import { forces } from '../blocks/beginner/Forces';
 import { motionGraphs } from '../blocks/beginner/MotionGraphs';
+import { powersOfTen } from '../blocks/beginner/PowersOfTen';
 import { newtonsCannon } from '../blocks/beginner/NewtonsCannon';
 import type { BlockDef, LevelDef } from './types';
 
@@ -13,7 +14,7 @@ export const LEVELS: LevelDef[] = [
     subtitle: 'motion and gravity',
     where: 'Senior high-school physics (the QCAA formula sheet’s “Linear motion and force” and “Gravity and motion”).',
     blocks: [
-      soon('powers-of-ten', 'Powers of ten', 'How do you hold numbers as big as a star and as small as an atom in your head at the same time?'),
+      powersOfTen,
       soon('arrows', 'Arrows: velocity has a direction', 'Why can a thing move at a perfectly steady speed and still be accelerating?'),
       motionGraphs,
       forces,

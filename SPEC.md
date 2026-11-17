@@ -71,7 +71,7 @@ tests + build. Preview: `.claude/launch.json` → `node scripts/serve.mjs` on po
 ## Block checklist
 
 Beginner (high school)
-- [ ] 1 Powers of ten (toolkit)
+- [x] 1 Powers of ten (toolkit)
 - [ ] 2 Arrows: velocity has a direction (toolkit)
 - [x] 3 Speed is a slope, distance is an area
 - [x] 4 Forces: arrows that change motion (Newton 1 & 2, net force; replaces "A push in empty space")
