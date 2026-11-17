@@ -97,7 +97,7 @@ Medium (first-year uni)
 Advanced
 - [x] 1 Anatomy of a black hole
 - [x] 2 Falling in
-- [ ] 3 Black holes aren't black (Hawking radiation)
+- [x] 3 Black holes aren't black (Hawking radiation)
 
 Milestones
 - [x] Slice built: shell + blocks B3 and B10 (verified in the browser: dark + light themes, deep links, what-if

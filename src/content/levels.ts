@@ -1,6 +1,7 @@
 // The three levels and their blocks, in story order. Blocks without a Sim show as "being built".
 import { anatomy } from '../blocks/advanced/Anatomy';
 import { fallingIn } from '../blocks/advanced/FallingIn';
+import { hawkingRadiation } from '../blocks/advanced/HawkingRadiation';
 import { arrows } from '../blocks/beginner/Arrows';
 import { circles } from '../blocks/beginner/Circles';
 import { energy } from '../blocks/beginner/Energy';
@@ -70,7 +71,7 @@ export const LEVELS: LevelDef[] = [
     blocks: [
       anatomy,
       fallingIn,
-      soon('hawking-radiation', "Black holes aren't black", 'How can something nothing escapes from slowly evaporate?'),
+      hawkingRadiation,
     ],
   },
 ];
