@@ -1,0 +1,161 @@
+/* From Apples to Black Holes: palette. Dark "space" theme by default; light via <html data-theme="light">.
+   Colour carries meaning: inside a block each symbol keeps one colour (--m1 ... --m6) across its slider,
+   its formula and its picture; --accent is for things you can grab; --ok / --bad always come with text too. */
+
+:root {
+  --bg: #0a0c11;
+  --surface: #11141b;
+  --surface-2: #181c25;
+  --surface-3: #232835;
+  --border: #2a303d;
+  --text: #e9ebf0;
+  --text-2: #b4b9c5;
+  --text-3: #858b99;
+  --accent: #52c7d3;
+  --accent-soft: #15323a;
+  --m1: #5aa2ff;
+  --m2: #ff9545;
+  --m3: #3ccf9a;
+  --m4: #c08cff;
+  --m5: #f2c94c;
+  --m6: #ff6b9a;
+  --ok: #4cc27a;
+  --ok-soft: #173322;
+  --bad: #ff6b5f;
+  --bad-soft: #3a1c1a;
+  --warn: #f0a640;
+  --warn-soft: #3a2c14;
+  --pred: #c08cff;
+  --grid: rgba(255, 255, 255, 0.08);
+  --grid-minor: rgba(255, 255, 255, 0.04);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  --space-bg: #05070b;
+  --star: rgba(255, 255, 255, 0.75);
+  --radius: 10px;
+  --font: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --mono: ui-monospace, 'Cascadia Mono', 'SF Mono', Consolas, 'Liberation Mono', monospace;
+  color-scheme: dark;
+}
+
+:root[data-theme='light'] {
+  --bg: #f6f6f4;
+  --surface: #ffffff;
+  --surface-2: #f1f1ee;
+  --surface-3: #e7e6e2;
+  --border: #dddbd5;
+  --text: #1c1c1a;
+  --text-2: #55534e;
+  --text-3: #85827b;
+  --accent: #0f6f7c;
+  --accent-soft: #e0f1f3;
+  --m1: #1f6fd1;
+  --m2: #d9640f;
+  --m3: #138a63;
+  --m4: #8b45c7;
+  --m5: #a87a00;
+  --m6: #c8336a;
+  --ok: #1d7a3e;
+  --ok-soft: #e6f4ea;
+  --bad: #b42318;
+  --bad-soft: #fdecea;
+  --warn: #a35a00;
+  --warn-soft: #fdf3e2;
+  --pred: #8b45c7;
+  --grid: rgba(0, 0, 0, 0.07);
+  --grid-minor: rgba(0, 0, 0, 0.035);
+  --shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.04);
+  color-scheme: light;
+}
+
+/* A window into space: always dark, whatever the theme, with the dark series colours so trails and arrows
+   read well on black. Canvas code reads its colours from inside this element (useThemeColors(..., ref)). */
+.space {
+  --m1: #5aa2ff;
+  --m2: #ff9545;
+  --m3: #3ccf9a;
+  --m4: #c08cff;
+  --m5: #f2c94c;
+  --m6: #ff6b9a;
+  --accent: #52c7d3;
+  --text: #e9ebf0;
+  --text-2: #b4b9c5;
+  --text-3: #858b99;
+  --grid: rgba(255, 255, 255, 0.08);
+  background: var(--space-bg);
+  color: var(--text);
+  border-radius: 8px;
+}
+
+/* Colour-link classes used by the \ca ... \cf TeX macros (and by plain HTML labels). */
+.k1 { color: var(--m1); }
+.k2 { color: var(--m2); }
+.k3 { color: var(--m3); }
+.k4 { color: var(--m4); }
+.k5 { color: var(--m5); }
+.k6 { color: var(--m6); }
+
+* {
+  box-sizing: border-box;
+}
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font: 15.5px/1.6 var(--font);
+  overflow-x: hidden;
+}
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+:focus-visible {
+  outline: 2.5px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+h1 {
+  font-size: 2.1rem;
+  line-height: 1.2;
+  margin: 0.2em 0 0.4em;
+  letter-spacing: -0.015em;
+}
+h2 {
+  font-size: 1.55rem;
+  line-height: 1.25;
+  margin: 0.2em 0 0.3em;
+  letter-spacing: -0.01em;
+}
+h3 {
+  font-size: 1.05rem;
+  margin: 0.6em 0 0.3em;
+}
+h4 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-3);
+  margin: 0 0 0.35em;
+}
+code {
+  font-family: var(--mono);
+  font-size: 0.88em;
+  background: var(--surface-2);
+  padding: 0.05em 0.35em;
+  border-radius: 4px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
