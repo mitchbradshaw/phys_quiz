@@ -11,6 +11,7 @@ import { strandedAstronaut } from '../blocks/beginner/StrandedAstronaut';
 import { dancingPartners } from '../blocks/medium/DancingPartners';
 import { ellipses } from '../blocks/medium/Ellipses';
 import { gravityAssist } from '../blocks/medium/GravityAssist';
+import { gravityWells } from '../blocks/medium/GravityWells';
 import { hohmann } from '../blocks/medium/Hohmann';
 import { tides } from '../blocks/medium/Tides';
 import { tinySteps } from '../blocks/medium/TinySteps';
@@ -52,7 +53,7 @@ export const LEVELS: LevelDef[] = [
       hohmann,
       gravityAssist,
       tides,
-      soon('gravity-wells', 'Gravity wells and dark stars', 'How fast must you go to never come back, and what if the answer were the speed of light?'),
+      gravityWells,
       soon('light-clock', 'The light clock', 'If everyone measures the same speed of light, whose clock is running slow?'),
       soon('spacetime', 'Space-time diagrams and the twin paradox', 'Why does the twin who travels come home younger, when each sees the other moving?'),
     ],

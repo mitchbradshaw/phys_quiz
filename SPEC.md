@@ -90,7 +90,7 @@ Medium (first-year uni)
 - [x] 4 To catch up, slow down (Hohmann)
 - [x] 5 Gravity assists
 - [x] 6 Tides and the Roche limit
-- [ ] 7 Gravity wells and dark stars (escape velocity, ∫ of work)
+- [x] 7 Gravity wells and dark stars (escape velocity, ∫ of work)
 - [ ] 8 The light clock (SR)
 - [ ] 9 Space-time diagrams and the twin paradox (SR)
 
