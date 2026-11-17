@@ -3,6 +3,7 @@ import { arrows } from '../blocks/beginner/Arrows';
 import { forces } from '../blocks/beginner/Forces';
 import { motionGraphs } from '../blocks/beginner/MotionGraphs';
 import { powersOfTen } from '../blocks/beginner/PowersOfTen';
+import { strandedAstronaut } from '../blocks/beginner/StrandedAstronaut';
 import { newtonsCannon } from '../blocks/beginner/NewtonsCannon';
 import type { BlockDef, LevelDef } from './types';
 
@@ -19,7 +20,7 @@ export const LEVELS: LevelDef[] = [
       arrows,
       motionGraphs,
       forces,
-      soon('stranded-astronaut', 'The stranded astronaut', 'How do you move when there is nothing to push against?'),
+      strandedAstronaut,
       soon('energy', 'Energy: the currency of motion', 'Why does going twice as fast make a crash four times worse?'),
       soon('projectiles', 'Projectiles on other worlds', 'Why do a dropped ball and a ball fired sideways hit the ground at the same moment?'),
       soon('circles', 'Going in circles', 'If nothing is pushing a spinning thing outwards, what does the string actually do?'),
