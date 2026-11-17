@@ -13,6 +13,7 @@ import { ellipses } from '../blocks/medium/Ellipses';
 import { gravityAssist } from '../blocks/medium/GravityAssist';
 import { gravityWells } from '../blocks/medium/GravityWells';
 import { lightClock } from '../blocks/medium/LightClock';
+import { spacetime } from '../blocks/medium/Spacetime';
 import { hohmann } from '../blocks/medium/Hohmann';
 import { tides } from '../blocks/medium/Tides';
 import { tinySteps } from '../blocks/medium/TinySteps';
@@ -56,7 +57,7 @@ export const LEVELS: LevelDef[] = [
       tides,
       gravityWells,
       lightClock,
-      soon('spacetime', 'Space-time diagrams and the twin paradox', 'Why does the twin who travels come home younger, when each sees the other moving?'),
+      spacetime,
     ],
   },
   {

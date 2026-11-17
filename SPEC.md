@@ -92,7 +92,7 @@ Medium (first-year uni)
 - [x] 6 Tides and the Roche limit
 - [x] 7 Gravity wells and dark stars (escape velocity, ∫ of work)
 - [x] 8 The light clock (SR)
-- [ ] 9 Space-time diagrams and the twin paradox (SR)
+- [x] 9 Space-time diagrams and the twin paradox (SR)
 
 Advanced
 - [ ] 1 Anatomy of a black hole
