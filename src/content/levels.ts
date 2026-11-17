@@ -1,4 +1,5 @@
 // The three levels and their blocks, in story order. Blocks without a Sim show as "being built".
+import { forces } from '../blocks/beginner/Forces';
 import { motionGraphs } from '../blocks/beginner/MotionGraphs';
 import { newtonsCannon } from '../blocks/beginner/NewtonsCannon';
 import type { BlockDef, LevelDef } from './types';
@@ -15,7 +16,7 @@ export const LEVELS: LevelDef[] = [
       soon('powers-of-ten', 'Powers of ten', 'How do you hold numbers as big as a star and as small as an atom in your head at the same time?'),
       soon('arrows', 'Arrows: velocity has a direction', 'Why can a thing move at a perfectly steady speed and still be accelerating?'),
       motionGraphs,
-      soon('push-in-empty-space', 'A push in empty space', 'Why does motion need no cause, but a change in motion always does?'),
+      forces,
       soon('stranded-astronaut', 'The stranded astronaut', 'How do you move when there is nothing to push against?'),
       soon('energy', 'Energy: the currency of motion', 'Why does going twice as fast make a crash four times worse?'),
       soon('projectiles', 'Projectiles on other worlds', 'Why do a dropped ball and a ball fired sideways hit the ground at the same moment?'),

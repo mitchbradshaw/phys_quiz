@@ -1,7 +1,7 @@
 // Beginner 10: Newton's cannon. Fire sideways from a (fantasy-tall) mountain on a to-scale planet: land, orbit or
 // escape. Trajectories are integrated with real inverse-square gravity and played back at 1 s = 10 min.
-// Colours: v blue (m1), gravity's pull F/g orange (m2), ball mass m green (m3), planet mass M purple (m4),
-// distance r gold (m5).
+// Colours follow the site scheme (ui/colors.ts): velocity blue, gravity's pull F and g orange, masses m and M green,
+// distances r and h gold; the path is neutral.
 import { useEffect, useId, useMemo, useRef, useState } from 'react';
 import { useRaf } from '../../anim/hooks';
 import type { BlockDef } from '../../content/types';
@@ -9,6 +9,7 @@ import { makeRng } from '../../engine/rng';
 import { EARTH, G, MARS, MOON, type Body } from '../../physics/constants';
 import { circularSpeed, escapeSpeed, fieldAt, grazingSpeed, integrateLaunch, orbitPeriod, sampleIndexAt, type Trajectory } from '../../physics/gravity';
 import { Challenge, Formula, Formulas, num, sci, SimTags, WhatIfs } from '../../ui/blockkit';
+import { TRAIL } from '../../ui/colors';
 import { Button, Legend, Readout, Readouts, Segmented, SimLayout, Slider } from '../../ui/kit';
 import { Rich } from '../../ui/Rich';
 import { WhatIf } from '../../ui/WhatIf';
@@ -250,7 +251,7 @@ function NewtonsCannonSim() {
           ))}
           <g transform={`translate(${CX} ${CY})`}>
             <circle r={Rk} fill={`url(#${uid}-planet)`} stroke={body.color} strokeOpacity={0.6} />
-            <text x={Rk * 0.32} y={Rk * 0.38} className="plot-note" fill="var(--m4)" fontWeight={700} fontSize={view === 'close' ? 15 : 11}>
+            <text x={Rk * 0.32} y={Rk * 0.38} className="plot-note" fill="var(--m3)" fontWeight={700} fontSize={view === 'close' ? 15 : 11}>
               M
             </text>
             <line x1={0} y1={0} x2={0} y2={-r0k} stroke="var(--m5)" strokeWidth={1.4} strokeDasharray="4 4" />
@@ -263,9 +264,9 @@ function NewtonsCannonSim() {
               <circle cx={0} cy={-2} r={3} fill="#8f98a8" />
             </g>
             {olderScreens.map((s, i) => (
-              <path key={s.id} d={s.d} fill="none" stroke="var(--m3)" strokeWidth={1.4} opacity={0.18 + (0.3 * (i + 1)) / Math.max(1, olderScreens.length)} />
+              <path key={s.id} d={s.d} fill="none" stroke={TRAIL} strokeWidth={1.4} opacity={0.18 + (0.3 * (i + 1)) / Math.max(1, olderScreens.length)} />
             ))}
-            <path ref={pathRef} fill="none" stroke="var(--m3)" strokeWidth={2.2} />
+            <path ref={pathRef} fill="none" stroke={TRAIL} strokeWidth={2.2} />
             <g ref={ballRef} visibility="hidden">
               <line ref={gArrowRef} x1={0} y1={0} x2={0} y2={0} stroke="var(--m2)" strokeWidth={2.5} markerEnd={`url(#${uid}-hg)`} />
               <line ref={vArrowRef} x1={0} y1={0} x2={0} y2={0} stroke="var(--m1)" strokeWidth={2.5} markerEnd={`url(#${uid}-hv)`} />
@@ -282,7 +283,7 @@ function NewtonsCannonSim() {
           { label: 'velocity v', color: 'var(--m1)' },
           { label: "gravity's pull", color: 'var(--m2)' },
           { label: 'distance r from the centre', color: 'var(--m5)', dash: '4 4' },
-          { label: 'cannonball path', color: 'var(--m3)' },
+          { label: 'cannonball path', color: TRAIL },
         ]}
       />
     </div>
@@ -312,7 +313,7 @@ function NewtonsCannonSim() {
         </div>
         <Slider
           label="mountain height"
-          tex="\ce{h}"
+          tex="\qs{h}"
           tip="height of the launch point above the surface (km); the distance from the centre is r = R + h"
           value={h}
           min={100}
@@ -325,8 +326,8 @@ function NewtonsCannonSim() {
             setH(x);
           }}
         />
-        <Slider label="launch speed" tex="\ca{v}" tip="sideways speed out of the cannon (km/s)" value={v} min={0} max={VMAX[worldId]} step={VMAX[worldId] / 1000} unit="km/s" sig={3} onChange={setV} />
-        <Slider label="cannonball mass" tex="\cc{m}" tip="mass of the cannonball (kg)" value={m} min={1} max={1000} log unit="kg" sig={3} onChange={setM} />
+        <Slider label="launch speed" tex="\qv{v}" tip="sideways speed out of the cannon (km/s)" value={v} min={0} max={VMAX[worldId]} step={VMAX[worldId] / 1000} unit="km/s" sig={3} onChange={setV} />
+        <Slider label="cannonball mass" tex="\qm{m}" tip="mass of the cannonball (kg)" value={m} min={1} max={1000} log unit="kg" sig={3} onChange={setM} />
         <div className="row gap-s wrap">
           <Button variant="primary" onClick={() => fire()}>
             Fire!
@@ -339,13 +340,13 @@ function NewtonsCannonSim() {
       </div>
       <div className="ctl-group">
         <Readouts>
-          <Readout tex="\ce{r}" tip="distance from the planet's centre, r = R + h" value={r0 / 1000} unit="km" sig={4} />
+          <Readout tex="\qs{r}" tip="distance from the planet's centre, r = R + h" value={r0 / 1000} unit="km" sig={4} />
           <Readout tex="v_{\text{circle}}" tip="speed for a circular orbit at this height, √(GM/r)" value={vcK} unit="km/s" sig={3} tone="m1" />
           <Readout label="your speed" tip="your launch speed as a percentage of the circular-orbit speed" value={pct} unit="%" sig={3} tone={Math.abs(pct - 100) < 0.5 ? 'ok' : undefined} />
           <Readout tex="v_{\text{escape}}" tip="escape speed from this height, √(2GM/r)" value={ve / 1000} unit="km/s" sig={3} />
-          <Readout tex="\cb{g}" tip="gravity's pull per kilogram at this height, GM/r²" value={g} unit="m/s²" sig={3} tone="m2" />
-          <Readout tex="\cb{F}" tip="gravity's pull on the cannonball, F = mg" value={m * g} unit="N" sig={3} tone="m2" />
-          <Readout tex="a = F/\cc{m}" tip="the cannonball's acceleration: pull divided by mass" value={(m * g) / m} unit="m/s²" sig={3} />
+          <Readout tex="\qa{g}" tip="gravity's pull per kilogram at this height, GM/r²" value={g} unit="m/s²" sig={3} tone="m2" />
+          <Readout tex="\qa{F}" tip="gravity's pull on the cannonball, F = mg" value={m * g} unit="N" sig={3} tone="m2" />
+          <Readout tex="\qa{a} = \qa{F}/\qm{m}" tip="the cannonball's acceleration: pull divided by mass" value={(m * g) / m} unit="m/s²" sig={3} />
         </Readouts>
       </div>
     </>
@@ -356,16 +357,27 @@ function NewtonsCannonSim() {
       <Formulas>
         <Formula
           title="The speed that keeps missing the ground"
-          tex="\frac{G\cd{M}\cc{m}}{\ce{r}^{2}} = \frac{\cc{m}\ca{v}^{2}}{\ce{r}} \;\Rightarrow\; \ca{v} = \sqrt{\frac{G\cd{M}}{\ce{r}}}"
-          say="Gravity's pull on the ball (left) must be exactly the inward pull that a circle of radius $r$ needs (right). The ball's mass $m$ is on both sides, so it cancels: a pebble and a space station need the same speed."
-          live={`\\ca{v} = \\sqrt{\\dfrac{${sci(G)} \\times \\cd{${sci(body.M)}}}{\\ce{${sci(r0)}}}} = \\ca{${num(vcK, 2)}}\\ \\text{km/s}`}
+          tex="\frac{G\qm{M}\qm{m}}{\qs{r}^{2}} = \frac{\qm{m}\qv{v}^{2}}{\qs{r}} \;\Rightarrow\; \qv{v} = \sqrt{\frac{G\qm{M}}{\qs{r}}}"
+          say="Gravity's pull on the ball (left) must be exactly the inward pull that a circle of radius $\qs{r}$ needs (right). The ball's mass $\qm{m}$ is on both sides, so it cancels: a pebble and a space station need the same speed."
+          where={[
+            ['G', 'the **gravitational constant**, $6.67 \\times 10^{-11}$ N m²/kg². One number that works for any two masses anywhere in the universe: it sets how strong gravity is'],
+            ['\\qm{M}', 'the mass of the planet (kg)'],
+            ['\\qm{m}', 'the mass of the cannonball (kg)'],
+            ['\\qs{r}', "the distance from the planet's **centre** to the ball: the planet's radius plus the mountain (m)"],
+            ['\\qv{v}', 'the sideways speed that makes the ball fall around the planet instead of into it (m/s)'],
+          ]}
+          live={`\\qv{v} = \\sqrt{\\dfrac{${sci(G)} \\times \\qm{${sci(body.M)}}}{\\qs{${sci(r0)}}}} = \\qv{${num(vcK, 2)}}\\ \\text{km/s}`}
           liveNote={`Your cannon fires at **${v.toFixed(2)} km/s**: ${pct.toFixed(0)} % of that.`}
         />
         <Formula
           title="How hard gravity pulls up there"
-          tex="\cb{g} = \frac{G\cd{M}}{\ce{r}^{2}}"
-          say="The pull on each kilogram at distance $r$ from the planet's centre. Double the distance and it drops to a quarter: that's what the square on the bottom does."
-          live={`\\cb{g} = \\dfrac{${sci(G)} \\times \\cd{${sci(body.M)}}}{(\\ce{${sci(r0)}})^{2}} = \\cb{${num(g, 2)}}\\ \\text{m/s}^2`}
+          tex="\qa{g} = \frac{G\qm{M}}{\qs{r}^{2}}"
+          say="The pull on each kilogram at distance $\qs{r}$ from the planet's centre. Double the distance and it drops to a quarter: that's what the square on the bottom does."
+          where={[
+            ['\\qa{g}', 'the strength of gravity there: the pull on each kilogram (N/kg), which is also the acceleration of anything falling freely (m/s²)'],
+            ['G,\\ \\qm{M},\\ \\qs{r}', 'as in the first formula'],
+          ]}
+          live={`\\qa{g} = \\dfrac{${sci(G)} \\times \\qm{${sci(body.M)}}}{(\\qs{${sci(r0)}})^{2}} = \\qa{${num(g, 2)}}\\ \\text{m/s}^2`}
           liveNote={`That's ${((100 * g) / gSurf).toFixed(0)} % of gravity at the surface. On a ${num(m, m < 10 ? 1 : 0)} kg ball it is a pull of ${num(m * g, 0)} N.`}
         />
       </Formulas>
@@ -439,10 +451,6 @@ export const newtonsCannon: BlockDef = {
 Isaac Newton answered with a thought experiment. Put a cannon on a mountain so tall it pokes out of the air, and fire sideways. The ball curves down and lands. Fire faster and it lands further away, because the ground curves away beneath it. Fire fast enough and the ground curves away exactly as fast as the ball falls, so it never lands: that's an **orbit**. The Moon *is* falling, all the time. Its sideways speed is what keeps it missing.`,
   Sim: NewtonsCannonSim,
   maths: [
-    {
-      title: 'Square roots',
-      body: `$\\sqrt{x}$ asks: *which number, multiplied by itself, gives $x$?* So $\\sqrt{49} = 7$, because $7 \\times 7 = 49$. It undoes squaring. In the orbit formula it means the speed you need grows more slowly than the planet's mass: a planet 4 times heavier needs only 2 times the speed.`,
-    },
     {
       title: 'Cancelling things out of an equation',
       body: `An equation is a balance: do the same thing to both sides and it stays true. In $\\dfrac{GMm}{r^2} = \\dfrac{mv^2}{r}$ both sides are multiplied by the ball's mass $m$, so dividing both sides by $m$ removes it. Multiply both sides by $r$ to get $\\dfrac{GM}{r} = v^2$, then take the square root of both sides: $v = \\sqrt{GM/r}$.`,

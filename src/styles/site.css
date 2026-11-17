@@ -246,6 +246,21 @@
   color: var(--text-2);
   font-size: 0.92rem;
 }
+.formula-where {
+  display: grid;
+  grid-template-columns: max-content 1fr;
+  gap: 3px 10px;
+  margin: 8px 0 2px;
+  font-size: 0.86rem;
+  color: var(--text-2);
+}
+.formula-where dt {
+  text-align: right;
+  white-space: nowrap;
+}
+.formula-where dd {
+  margin: 0;
+}
 .formula-live {
   border-top: 1px dashed var(--border);
   margin-top: 8px;

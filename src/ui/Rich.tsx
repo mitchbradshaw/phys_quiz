@@ -12,6 +12,14 @@ const MACROS: Record<string, string> = {
   '\\cd': '\\htmlClass{k4}{#1}',
   '\\ce': '\\htmlClass{k5}{#1}',
   '\\cf': '\\htmlClass{k6}{#1}',
+  // Meaning-based names for the same colours, used site-wide (see ui/colors.ts): velocity, force/acceleration,
+  // mass, time, distance, energy/momentum.
+  '\\qv': '\\htmlClass{k1}{#1}',
+  '\\qa': '\\htmlClass{k2}{#1}',
+  '\\qm': '\\htmlClass{k3}{#1}',
+  '\\qt': '\\htmlClass{k4}{#1}',
+  '\\qs': '\\htmlClass{k5}{#1}',
+  '\\qe': '\\htmlClass{k6}{#1}',
 };
 const trust = (ctx: { command: string }) => ctx.command === '\\htmlClass';
 

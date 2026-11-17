@@ -1,18 +1,19 @@
 // Beginner 3: "Speed is a slope, distance is an area". A rocket sled with steady acceleration and its three graphs,
 // drawn as the clock runs. Slope of position = velocity; area under velocity = position; area under acceleration
-// = change in velocity. Colours: v blue (m1), a orange (m2), u green (m3), t purple (m4), s gold (m5).
+// = change in velocity. Colours follow the site scheme (ui/colors.ts): velocities blue, acceleration orange, time purple, position gold.
 import { useMemo, useRef, useState } from 'react';
 import { useRaf } from '../../anim/hooks';
 import type { BlockDef } from '../../content/types';
 import { displacementAt, displacementRange, sliceSum, velocityAt } from '../../physics/kinematics';
 import { Area, Dot, HLine, Line, Plot, PlotText, Poly, sample } from '../../plot/Plot';
 import { Challenge, Formula, Formulas, num, SimTags, WhatIfs } from '../../ui/blockkit';
+import { Q } from '../../ui/colors';
 import { Button, Readout, Readouts, Segmented, SimLayout, Slider } from '../../ui/kit';
 import { Rich } from '../../ui/Rich';
 import { WhatIf } from '../../ui/WhatIf';
 
 const T_END = 10;
-const C = { v: 'var(--m1)', a: 'var(--m2)', u: 'var(--m3)', t: 'var(--m4)', s: 'var(--m5)', neg: 'var(--m6)' };
+const C = { v: Q.v, a: Q.a, u: Q.v, t: Q.t, s: Q.s, neg: Q.E };
 type AreaMode = 'fill' | 'split' | 'slices';
 
 function niceStep(span: number) {
@@ -270,11 +271,11 @@ function MotionGraphsSim() {
   const controls = (
     <>
       <div className="ctl-group">
-        <Slider label="starting velocity" tex="\cc{u}" tip="velocity at t = 0, in metres per second; negative means backwards" value={u} min={-10} max={20} step={0.5} unit="m/s" onChange={setU} />
-        <Slider label="acceleration" tex="\cb{a}" tip="change in velocity every second, in m/s per second (m/s²)" value={a} min={-5} max={5} step={0.25} unit="m/s²" onChange={setA} />
+        <Slider label="starting velocity" tex="\qv{u}" tip="velocity at t = 0, in metres per second; negative means backwards" value={u} min={-10} max={20} step={0.5} unit="m/s" onChange={setU} />
+        <Slider label="acceleration" tex="\qa{a}" tip="change in velocity every second, in m/s per second (m/s²)" value={a} min={-5} max={5} step={0.25} unit="m/s²" onChange={setA} />
         <Slider
           label="time"
-          tex="\cd{t}"
+          tex="\qt{t}"
           tip="seconds since the start"
           value={t}
           min={0}
@@ -313,10 +314,10 @@ function MotionGraphsSim() {
       </div>
       <div className="ctl-group">
         <Readouts>
-          <Readout tex="\cd{t}" tip="time since the start" value={t} unit="s" sig={3} />
-          <Readout tex="\ce{s}" tip="position: how far from the start (negative = behind it)" value={s} unit="m" sig={3} />
-          <Readout tex="\ca{v}" tip="velocity right now" value={v} unit="m/s" sig={3} />
-          <Readout tex="\cb{a}" tip="acceleration (steady)" value={a} unit="m/s²" sig={3} />
+          <Readout tex="\qt{t}" tip="time since the start" value={t} unit="s" sig={3} />
+          <Readout tex="\qs{s}" tip="position: how far from the start (negative = behind it)" value={s} unit="m" sig={3} />
+          <Readout tex="\qv{v}" tip="velocity right now" value={v} unit="m/s" sig={3} />
+          <Readout tex="\qa{a}" tip="acceleration (steady)" value={a} unit="m/s²" sig={3} />
         </Readouts>
         {stopTime !== null && stopTime < T_END && (
           <div className="note">
@@ -347,7 +348,7 @@ function MotionGraphsSim() {
             <div className="note">Each slice pretends the velocity stayed fixed for a moment. More, thinner slices: closer to the exact answer.</div>
           </>
         )}
-        {mode === 'split' && <Rich className="note" text={String.raw`Green rectangle $= \cc{u} \times \cd{t}$. Orange triangle $= \tfrac12 \times$ base $\times$ height $= \tfrac12 \times \cd{t} \times \cb{a}\cd{t}$. Together they are the formula for $\ce{s}$.`} />}
+        {mode === 'split' && <Rich className="note" text={String.raw`Blue rectangle $= \qv{u} \times \qt{t}$. Orange triangle $= \tfrac12 \times$ base $\times$ height $= \tfrac12 \times \qt{t} \times \qa{a}\qt{t}$. Together they are the formula for $\qs{s}$.`} />}
         {mode === 'fill' && <div className="note">Area above the axis counts forwards; below the axis (pink) counts backwards.</div>}
       </div>
     </>
@@ -358,15 +359,25 @@ function MotionGraphsSim() {
       <Formulas>
         <Formula
           title="Velocity after t seconds"
-          tex="\ca{v} = \cc{u} + \cb{a}\,\cd{t}"
+          tex="\qv{v} = \qv{u} + \qa{a}\,\qt{t}"
           say="Velocity now = starting velocity + (change per second × number of seconds). The $at$ part is the area under the acceleration graph."
-          live={`\\ca{v} = \\cc{${num(u)}} + (\\cb{${num(a, 2)}})(\\cd{${num(t)}}) = \\ca{${num(v)}}\\ \\text{m/s}`}
+          where={[
+            ['\\qv{v}', 'the velocity after $t$ seconds (m/s)'],
+            ['\\qv{u}', 'the starting velocity, at $t = 0$ (m/s)'],
+            ['\\qa{a}', 'the acceleration: how much the velocity changes each second (m/s²)'],
+            ['\\qt{t}', 'the time since the start (s)'],
+          ]}
+          live={`\\qv{v} = \\qv{${num(u)}} + (\\qa{${num(a, 2)}})(\\qt{${num(t)}}) = \\qv{${num(v)}}\\ \\text{m/s}`}
         />
         <Formula
           title="Position after t seconds"
-          tex="\ce{s} = \cc{u}\,\cd{t} + \tfrac{1}{2}\,\cb{a}\,\cd{t}^{2}"
-          say="Distance = (starting velocity × time) + ½ × acceleration × time². It is the green rectangle plus the orange triangle under the velocity graph."
-          live={`\\ce{s} = (\\cc{${num(u)}})(\\cd{${num(t)}}) + \\tfrac{1}{2}(\\cb{${num(a, 2)}})(\\cd{${num(t)}})^{2} = \\ce{${num(s)}}\\ \\text{m}`}
+          tex="\qs{s} = \qv{u}\,\qt{t} + \tfrac{1}{2}\,\qa{a}\,\qt{t}^{2}"
+          say="Distance = (starting velocity × time) + ½ × acceleration × time². It is the blue rectangle plus the orange triangle under the velocity graph."
+          where={[
+            ['\\qs{s}', 'the position: how far the sled is from the start (m); negative means behind it'],
+            ['\\qv{u},\\ \\qa{a},\\ \\qt{t}', 'as in the first formula'],
+          ]}
+          live={`\\qs{s} = (\\qv{${num(u)}})(\\qt{${num(t)}}) + \\tfrac{1}{2}(\\qa{${num(a, 2)}})(\\qt{${num(t)}})^{2} = \\qs{${num(s)}}\\ \\text{m}`}
         />
       </Formulas>
       <SimLayout visual={visual} controls={controls} />
@@ -426,8 +437,8 @@ Going down a layer is always the same move: take the **rate of change**, which o
 A curved graph has a different slope at every point. The slope *at* a point is the slope of the straight line that just touches the curve there: the blue dashed line in the sim. The little triangle next to it shows the rise over a run of 1 second.`,
     },
     {
-      title: 'Squaring, and why it grows so fast',
-      body: `$t^2$ means $t \\times t$. Double $t$ and $t^2$ becomes **four** times bigger ($2 \\times 2$); triple it and it becomes **nine** times bigger. That's why the $\\tfrac12 a t^2$ part of the distance soon takes over: anything speeding up steadily from rest covers 4 times as much ground in 10 s as in 5 s.`,
+      title: 'Why the time-squared part takes over',
+      body: `Double $t$ and $t^2$ becomes **four** times bigger; triple it and it becomes **nine** times bigger. That's why the $\\tfrac12 a t^2$ part of the distance soon takes over: anything speeding up steadily from rest covers 4 times as much ground in 10 s as in 5 s.`,
     },
     {
       title: 'Negative numbers are directions',

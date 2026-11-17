@@ -1,5 +1,5 @@
 // Pieces every block uses: the formula shown three ways, tags on a visual, the what-if grid and the challenge.
-import type { ReactNode } from 'react';
+import { Fragment, type ReactNode } from 'react';
 import { Rich, TeX } from './Rich';
 import { Callout, More } from './kit';
 
@@ -14,9 +14,11 @@ export interface FormulaProps {
   live?: string | null;
   /** A short note under the live line (Rich). */
   liveNote?: string;
+  /** What each symbol means: [symbol in TeX, meaning in Rich]. Every symbol in the formula should appear once. */
+  where?: [string, string][];
 }
 
-export function Formula({ title, tex, say, live, liveNote }: FormulaProps) {
+export function Formula({ title, tex, say, live, liveNote, where }: FormulaProps) {
   return (
     <div className="formula">
       {title && <div className="formula-title">{title}</div>}
@@ -24,6 +26,20 @@ export function Formula({ title, tex, say, live, liveNote }: FormulaProps) {
         <TeX display>{tex}</TeX>
       </div>
       <Rich className="formula-say" text={say} />
+      {where && where.length > 0 && (
+        <dl className="formula-where">
+          {where.map(([sym, text]) => (
+            <Fragment key={sym}>
+              <dt>
+                <TeX>{sym}</TeX>
+              </dt>
+              <dd>
+                <Rich inline text={text} />
+              </dd>
+            </Fragment>
+          ))}
+        </dl>
+      )}
       {live && (
         <div className="formula-live">
           <span className="formula-live-tag">With your numbers</span>
