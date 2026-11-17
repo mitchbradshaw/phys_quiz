@@ -87,7 +87,7 @@ Medium (first-year uni)
 - [x] 1 How computers predict orbits (introduces d/dt and ∫)
 - [x] 2 Orbits are ellipses
 - [x] 3 Dancing partners (3D, frames, helices)
-- [ ] 4 To catch up, slow down (Hohmann)
+- [x] 4 To catch up, slow down (Hohmann)
 - [ ] 5 Gravity assists
 - [ ] 6 Tides and the Roche limit
 - [ ] 7 Gravity wells and dark stars (escape velocity, ∫ of work)

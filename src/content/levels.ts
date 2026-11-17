@@ -10,6 +10,7 @@ import { projectiles } from '../blocks/beginner/Projectiles';
 import { strandedAstronaut } from '../blocks/beginner/StrandedAstronaut';
 import { dancingPartners } from '../blocks/medium/DancingPartners';
 import { ellipses } from '../blocks/medium/Ellipses';
+import { hohmann } from '../blocks/medium/Hohmann';
 import { tinySteps } from '../blocks/medium/TinySteps';
 import { newtonsCannon } from '../blocks/beginner/NewtonsCannon';
 import { newtonsGravity } from '../blocks/beginner/NewtonsGravity';
@@ -46,7 +47,7 @@ export const LEVELS: LevelDef[] = [
       tinySteps,
       ellipses,
       dancingPartners,
-      soon('hohmann', 'To catch up, slow down', 'Why does a spacecraft chasing another one in orbit have to brake to catch it?'),
+      hohmann,
       soon('gravity-assist', 'Gravity assists', 'How does a spacecraft steal speed from a planet, and who pays for it?'),
       soon('tides', 'Tides and the Roche limit', 'Why are there two high tides a day, and why do moons that wander too close get shredded into rings?'),
       soon('gravity-wells', 'Gravity wells and dark stars', 'How fast must you go to never come back, and what if the answer were the speed of light?'),
