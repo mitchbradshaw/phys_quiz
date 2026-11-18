@@ -42,6 +42,12 @@ const PLANETS = [
   { name: 'Earth', a: 1, T: 1, col: '#4f8fd6' },
   { name: 'Mars', a: 1.524, T: 1.881, col: '#d0623c' },
 ];
+const PERIOD_DAYS: Record<string, number> = { earthmoon: 27.32, pluto: 6.387, jupiter: 4332.6 };
+/** Period with the current partner mass, from the real period and Kepler's third law (T ∝ 1/√(m1 + m2)). */
+function periodNow(p: Pair, m2: number) {
+  const d = (PERIOD_DAYS[p.id] ?? 0) * Math.sqrt((p.m1 + p.m2) / (p.m1 + m2));
+  return d < 60 ? `${num(d, 1)}\\ \\text{days}` : `${num(d / 365.25, 2)}\\ \\text{years}`;
+}
 const W = 560;
 const H = 400;
 const TRAIL_N = 220;
@@ -295,7 +301,7 @@ function DancingSim() {
             ['\\qm{m_1},\\ \\qm{m_2}', 'the two masses'],
             ['\\qs{r_1},\\ \\qs{r_2}', 'their distances from the centre of mass; together they add up to the separation $d$'],
           ]}
-          live={solar ? null : pair.dKm > 0 ? `\\qs{r_1} = d\\,\\frac{\\qm{m_2}}{\\qm{m_1} + \\qm{m_2}} = \\qs{${num(comKm, 0)}}\\ \\text{km}` : `\\qs{r_1} = \\qs{r_2}\\ \\text{(equal masses)}`}
+          live={solar ? null : pair.dKm > 0 ? `\\qs{r_1} = d\\,\\frac{\\qm{m_2}}{\\qm{m_1} + \\qm{m_2}} = \\qs{${num(comKm, 0)}}\\ \\text{km}` : `\\frac{\\qs{r_1}}{\\qs{d}} = \\frac{\\qm{m_2}}{\\qm{m_1} + \\qm{m_2}} = ${num(f1, 3)}`}
           liveNote={!solar && pair.r1Km > 0 ? `${pair.a}'s radius is ${num(pair.r1Km, 0)} km, so the balance point is ${inside ? 'inside it' : 'outside it'}.` : undefined}
         />
         <Formula
@@ -306,7 +312,8 @@ function DancingSim() {
             ['\\qt{T}', 'the time for one full dance (s)'],
             ['\\qs{d}', 'the distance between the two centres (m)'],
           ]}
-          live={!solar && pair.period ? `\\qt{T} = \\qt{\\text{${pair.period}}}` : null}
+          live={solar ? null : pair.id === 'binary' ? `\\qt{T} = ${num(Math.sqrt(2 / (1 + kB)), 3)} \\times \\qt{T_{\\text{equal twins}}}` : `\\qt{T} = \\qt{${periodNow(pair, m2)}}`}
+          liveNote={!solar && pair.id !== 'binary' ? `With the real masses: ${pair.period}. More total mass makes a faster dance.` : undefined}
         />
       </Formulas>
       <SimLayout visual={visual} controls={controls} />

@@ -222,6 +222,8 @@ function LightClockSim() {
             ['\\qv{v}\\,\\Delta\\qt{t}', 'how far the ship moves meanwhile'],
             ['c\\,\\Delta\\qt{t_0}', 'the mirror gap the crew sees the light cross'],
           ]}
+          live={mode === 'clock' ? `(\\qt{${num(g, 3)}})^2 = (${num(beta, 3)} \\times \\qt{${num(g, 3)}})^2 + (\\qt{1})^2` : null}
+          liveNote={mode === 'clock' ? `One tick, in light-seconds: the crew's tick lasts 1 s, the station's ${num(g, 3)} s. Both sides come to ${num(g * g, 3)}.` : undefined}
         />
       </Formulas>
       <SimLayout

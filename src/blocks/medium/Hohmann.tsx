@@ -236,7 +236,8 @@ function HohmannSim() {
             ['\\qs{r_1},\\ \\qs{r_2}', 'radii of the starting and final orbits (1 AU and 1.52 AU for Earth to Mars)'],
             ['\\qt{t_{\\text{trip}}}', 'the journey time: half the transfer ellipse’s period'],
           ]}
-          live={`\\qs{a} = \\frac{\\qs{1}+\\qs{1.524}}{2} = \\qs{1.262}\\ \\text{AU} \\quad\\Rightarrow\\quad \\qt{t_{\\text{trip}}} = \\qt{${num(tH / 86400, 0)}}\\ \\text{days}`}
+          live={station ? (tr ? `\\qs{a'} = \\frac{\\qs{${num(tr.peri / 1000, 0)}} + \\qs{${num(tr.apo / 1000, 0)}}}{2} = \\qs{${num(tr.a / 1000, 0)}}\\ \\text{km}` : null) : `\\qs{a} = \\frac{\\qs{1}+\\qs{1.524}}{2} = \\qs{1.262}\\ \\text{AU} \\quad\\Rightarrow\\quad \\qt{t_{\\text{trip}}} = \\qt{${num(tH / 86400, 0)}}\\ \\text{days}`}
+          liveNote={station ? "Your new orbit's lowest and highest distances from the Earth's centre, averaged: the same rule as Hohmann's." : `For that, Mars must lead by ${num(marsNeed, 1)}° at launch; you have it at ${num(marsLead, 1)}°.`}
         />
       </Formulas>
       <SimLayout visual={visual} controls={controls} />

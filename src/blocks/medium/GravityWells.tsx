@@ -12,7 +12,7 @@ import { Challenge, Formula, Formulas, num, sci, WhatIfs } from '../../ui/blockk
 import { Q } from '../../ui/colors';
 import { Button, Readout, Readouts, Segmented, SimLayout, Slider, Toggle } from '../../ui/kit';
 import { Rich } from '../../ui/Rich';
-import { SpacePanel } from '../../ui/svg';
+import { SpacePanel, Vec } from '../../ui/svg';
 import { WhatIf } from '../../ui/WhatIf';
 
 const BODIES = [
@@ -41,12 +41,13 @@ function WellsSim() {
   // motion in units: x = r/R, speed in units of v0 = √(GM/R) = vesc/√2, time in √(R³/GM)
   const w0 = u * Math.SQRT2; // launch speed in v0 units
 
+  // The throw only runs after a click, so it doesn't wait on the on-screen check.
   useRaf(
     (dt) =>
       setS((c) => {
         if (!c.flying) return c;
         let { x, v, t } = c;
-        const h = (dt * 1.2) / 20;
+        const h = (dt * 2.5) / 20;
         for (let i = 0; i < 20; i++) {
           // leapfrog for x'' = −1/x²
           v += (-1 / (x * x)) * (h / 2);
@@ -58,10 +59,20 @@ function WellsSim() {
         if (x > XMAX * 1.5) return { x, v, t, flying: false };
         return { x, v, t, flying: true };
       }),
-    s.flying,
-    visRef
+    s.flying
   );
   const launch = () => setS({ x: 1, v: w0, t: 0, flying: true });
+  const unitT = Math.sqrt(R ** 3 / (G * b.M)); // seconds per time unit
+  const unitV = Math.sqrt((G * b.M) / R); // m/s per speed unit
+  const fmtDur = (sec: number) => (sec < 120 ? `${num(sec, 0)} s` : sec < 7200 ? `${num(sec / 60, 0)} min` : sec < 2 * 86400 ? `${num(sec / 3600, 1)} hours` : `${num(sec / 86400, 1)} days`);
+  const thrown = s.t > 0;
+  const landed = thrown && !s.flying && s.x <= 1;
+  let status: string;
+  if (dark) status = `Squeezed inside its dark-star radius: not even light gets out, so there's nothing to throw. Widen the radius to throw again.`;
+  else if (!thrown) status = 'Press the button to throw the ball.';
+  else if (s.flying) status = `${s.v >= 0 ? '**Climbing**' : '**Falling back**'}: ${num(s.x - 1, 2)} radii above the surface, moving at ${num((Math.abs(s.v) * unitV) / 1000, 2)} km/s.`;
+  else if (landed) status = `**Back on the ground** after ${fmtDur(s.t * unitT)}.`;
+  else status = '**Escaped**: it will never come back.';
 
   const xTop = u < 1 ? 1 / (1 - u * u) : Infinity; // highest point, in radii
   const spent = 1 - 1 / s.x; // energy spent climbing, in units of GM/R per kg
@@ -97,7 +108,21 @@ function WellsSim() {
         </g>
       ))}
       <line x1={70} x2={550} y1={116} y2={116} stroke="rgba(255,255,255,0.2)" />
-      {!dark && <circle cx={Math.min(560, 40 + (s.x - 1) * 54 + 30)} cy={80} r={6} fill="#cfd5de" stroke="#fff" />}
+      {!dark && (() => {
+        const bx = Math.min(556, 70 + (s.x - 1) * 54);
+        const L = Math.min(70, Math.abs(s.v) * 40);
+        return (
+          <g>
+            {s.x > 1 && <line x1={70} x2={bx} y1={80} y2={80} stroke={Q.v} strokeWidth={2} opacity={0.45} />}
+            {s.flying && L > 3 && <Vec x1={bx} y1={66} x2={bx + Math.sign(s.v) * L} y2={66} color={Q.v} width={2.5} head={8} label="v" labelOffset={10} />}
+            <circle cx={bx} cy={80} r={13} fill="#ffffff" opacity={0.18} />
+            <circle cx={bx} cy={80} r={7} fill="#ffffff" stroke={Q.v} strokeWidth={1.5} />
+          </g>
+        );
+      })()}
+      <text x={78} y={102} className="plot-note" fill="var(--text-3)">
+        up →
+      </text>
       {!dark && u < 1 && xTop < XMAX && <line x1={40 + (xTop - 1) * 54 + 30} x2={40 + (xTop - 1) * 54 + 30} y1={62} y2={98} stroke={Q.s} strokeDasharray="3 3" />}
       <text x={16} y={24} className="plot-note" fill="var(--text-2)" fontWeight={700}>
         {dark ? `${b.name} squeezed inside 2GM/c²: a dark star` : `${b.name}${lsq < 0 ? ` squeezed to ${sci(R / 1000, 2).replace(' \\times 10^{', '×10^').replace('}', '')} km across radius` : ''}`}
@@ -139,8 +164,9 @@ function WellsSim() {
         />
         <Slider label="launch speed ÷ escape speed" tex="\qv{v}/\qv{v_{\text{esc}}}" tip="1.00 is exactly escape speed" value={u} min={0.1} max={1.3} step={0.01} sig={3} onChange={(x) => { setU(x); setS({ x: 1, v: 0, t: 0, flying: false }); }} />
         <Button variant="primary" onClick={launch} disabled={dark}>
-          Throw it straight up
+          {thrown && !s.flying ? 'Throw it again' : 'Throw it straight up'}
         </Button>
+        <Rich className="status" text={status} />
         <Toggle checked={slices} onChange={setSlices} label="Show the area as thin slices" />
         {slices && <Slider label="number of slices" value={n} min={2} max={60} step={1} sig={2} onChange={(x) => setN(Math.round(x))} />}
       </div>
@@ -173,6 +199,8 @@ function WellsSim() {
             ['\\qm{M},\\ \\qm{m}', 'the planet’s and the ball’s masses'],
             ['\\qs{r}', 'distance from the centre'],
           ]}
+          live={`\\frac{\\qe{E_{\\text{escape}}}}{\\qm{m}} = \\frac{G\\qm{M}}{\\qs{R}} = \\qe{${sci((G * b.M) / R, 3)}}\\ \\text{J/kg}`}
+          liveNote={`Your throw starts with ${num(u * u * 100, 0)} % of that as kinetic energy${u >= 1 ? ': enough to escape.' : '.'}`}
         />
         <Formula
           title="Escape speed, and the dark star"

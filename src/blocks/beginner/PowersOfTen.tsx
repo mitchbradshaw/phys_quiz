@@ -267,8 +267,8 @@ function PowersSim() {
             ['a', 'the front part: a number from 1 up to (but not including) 10'],
             ['n', 'the **power**: how many times to multiply by ten (or, when negative, to divide by ten)'],
           ]}
-          live={`\\text{${A.name.replace(/’/g, "'")}:}\\ \\qs{${sci(A.d)}}\\ \\text{m}`}
-          liveNote={`Written out: ${writtenOut(A.d)} m.`}
+          live={`\\text{this window:}\\ \\qs{d} = 10^{${k}}\\ \\text{m} \\qquad \\text{${A.name.replace(/’/g, "'")}:}\\ \\qs{${sci(A.d)}}\\ \\text{m}`}
+          liveNote={`Written out, this window is ${longForm(k)} m across, and ${A.name} is ${writtenOut(A.d)} m.`}
         />
         <Formula
           title="Comparing sizes: subtract the powers"

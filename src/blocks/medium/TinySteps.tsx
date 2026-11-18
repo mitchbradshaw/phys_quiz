@@ -114,6 +114,7 @@ function TinyStepsSim() {
   const py = CY - run.ys[i] * R;
   const dtDays = 365.25 / N;
   const stepKm = V_KMS * dtDays * 86400; // km per step at orbital speed
+  const chordSpeed = (V_KMS * Math.sin(Math.PI / N)) / (Math.PI / N); // straight-line distance per step ÷ step
   const ok = method === 'leapfrog' && N <= 60 && run.maxDev < 0.01;
   const ax = -run.xs[i] / Math.pow(run.xs[i] ** 2 + run.ys[i] ** 2, 1.5);
   const ay = -run.ys[i] / Math.pow(run.xs[i] ** 2 + run.ys[i] ** 2, 1.5);
@@ -220,6 +221,8 @@ function TinyStepsSim() {
             ['\\int', 'a stretched S, for "sum": add up all the tiny pieces'],
             ['\\qs{x_0}', 'the starting position'],
           ]}
+          live={`\\frac{|\\Delta\\qs{\\vec x}|}{\\Delta\\qt{t}} = \\qv{${num(chordSpeed, 2)}}\\ \\text{km/s} \\;\\longrightarrow\\; \\qv{v} = \\qv{29.80}\\ \\text{km/s}`}
+          liveNote="The straight-line distance between two points one step apart on the true orbit, divided by the step. Shrink the steps and this average settles on the true speed: that limit is the derivative."
         />
       </Formulas>
       <SimLayout visual={visual} controls={controls} />

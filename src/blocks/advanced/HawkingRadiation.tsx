@@ -41,14 +41,16 @@ function band(lam: number) {
   if (lam > 1e-11) return 'X-rays';
   return 'gamma rays';
 }
-/** Approximate colour of a glowing body at temperature T (K). */
-function glow(T: number) {
-  if (T < 800) return { col: '#5a1a12', label: 'too cold to glow visibly' };
-  const t = Math.min(40000, T) / 100;
-  const r = t <= 66 ? 255 : Math.min(255, 329.7 * Math.pow(t - 60, -0.1332));
-  const g = t <= 66 ? Math.max(0, 99.47 * Math.log(t) - 161.1) : Math.min(255, 288.1 * Math.pow(t - 60, -0.0755));
-  const b = t >= 66 ? 255 : t <= 19 ? 0 : Math.max(0, 138.5 * Math.log(t - 10) - 305.0);
-  return { col: `rgb(${Math.round(r)},${Math.round(g)},${Math.round(b)})`, label: T > 40000 ? 'blue-white hot, and far beyond' : 'glowing' };
+/**
+ * Temperature-scale colour, like a thermal camera (not the colour you'd actually see): blue when colder than the
+ * 2.7 K microwave sky, white near it, red when hotter, deeper the further from 2.7 K.
+ */
+const heatPos = (T: number) => Math.max(-1, Math.min(1, Math.log10(T / T_CMB) / 14));
+function heat(T: number) {
+  const p = heatPos(T);
+  const k = Math.abs(p);
+  const mix = (x: number, y: number) => Math.round(x + (y - x) * k);
+  return p < 0 ? `rgb(${mix(235, 61)},${mix(240, 123)},${mix(255, 255)})` : `rgb(${mix(255, 255)},${mix(240, 59)},${mix(235, 47)})`;
 }
 const fmtYears = (y: number) => (y < 1 / YEAR ? `${sci(y * YEAR, 2)}\\ \\text{s}` : y < 1 ? `${num(y * 365.25, 1)}\\ \\text{days}` : `${sci(y, 2)}\\ \\text{years}`);
 const plain = (texSci: string) => texSci.replace(' \\times 10^{', ' × 10^').replace('}', '').replace(/\\ \\text\{([^}]*)\}/, ' $1');
@@ -61,7 +63,6 @@ function HawkingSim() {
   const P = powerOf(M);
   const life = lifeYears(M);
   const rs = schwarzschild(M);
-  const gl = glow(T);
   const growing = T < T_CMB;
   const tempLine = sample((l) => Math.log10(tempOf(Math.pow(10, l))), L_MIN, L_MAX, 2);
   const lifeLine = sample((l) => Math.log10(lifeYears(Math.pow(10, l))), L_MIN, L_MAX, 2);
@@ -70,8 +71,15 @@ function HawkingSim() {
   const visual = (
     <div className="plot-stack">
       <SpacePanel w={560} h={190} ariaLabel={`Black hole of ${M.toExponential(2)} kg at ${T.toExponential(2)} K.`} tags={['Size not to scale']} tagsAt="tr" stars={70}>
-        <circle cx={130} cy={100} r={70} fill={gl.col} opacity={T < 800 ? 0.15 : 0.35} />
-        <circle cx={130} cy={100} r={52} fill={gl.col} opacity={T < 800 ? 0.2 : 0.6} />
+        <defs>
+          <linearGradient id="hawking-heat" x1="0" x2="1" y1="0" y2="0">
+            <stop offset="0%" stopColor="rgb(61,123,255)" />
+            <stop offset="50%" stopColor="rgb(235,240,255)" />
+            <stop offset="100%" stopColor="rgb(255,59,47)" />
+          </linearGradient>
+        </defs>
+        <circle cx={130} cy={100} r={70} fill={heat(T)} opacity={0.35} />
+        <circle cx={130} cy={100} r={52} fill={heat(T)} opacity={0.7} />
         <circle cx={130} cy={100} r={40} fill="#000" />
         <text x={230} y={56} fontSize={13} fontWeight={700} fill="var(--text)">
           {T >= 1e4 || T < 1e-2 ? `${plain(sci(T, 3))} K` : `${num(T, T < 10 ? 2 : 0)} K`}
@@ -84,6 +92,20 @@ function HawkingSim() {
         </text>
         <text x={230} y={124} className="plot-note" fill={growing ? '#7fb0e6' : '#ffb46b'} fontWeight={700}>
           {growing ? 'colder than the 2.7 K microwave sky: it absorbs more than it emits, and grows' : 'hotter than the microwave sky: it is slowly evaporating'}
+        </text>
+        <rect x={230} y={146} width={300} height={10} rx={3} fill="url(#hawking-heat)" />
+        <line x1={380 + heatPos(T) * 150} x2={380 + heatPos(T) * 150} y1={141} y2={161} stroke="#fff" strokeWidth={2} />
+        <text x={230} y={174} className="plot-note" fill="rgb(120,160,255)">
+          colder
+        </text>
+        <text x={380} y={174} textAnchor="middle" className="plot-note" fill="var(--text-2)">
+          2.7 K
+        </text>
+        <text x={530} y={174} textAnchor="end" className="plot-note" fill="rgb(255,110,100)">
+          hotter
+        </text>
+        <text x={230} y={138} className="plot-note" fill="var(--text-3)">
+          colour = temperature scale (like a thermal camera)
         </text>
       </SpacePanel>
       <div className="plot-caption">

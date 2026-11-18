@@ -123,6 +123,8 @@ function AnatomySim() {
             ['\\varphi', 'angle around the black hole (phi)'],
             ['\\frac{d^2u}{d\\varphi^2}', 'how the bending of $u$ changes with angle: a second derivative'],
           ]}
+          live={`\\qs{b} = \\qs{${b.toFixed(4)}}\\,r_s \\quad\\text{vs}\\quad \\qs{b_c} = \\tfrac{3\\sqrt3}{2}\\,r_s = 2.5981\\,r_s`}
+          liveNote={mine.fate === 'in' ? 'Aimed inside the critical distance: your ray spirals in.' : `Aimed outside it: your ray escapes${turns >= 0.5 ? ` after ${num(turns, 1)} turns` : ', bent'}.`}
         />
       </Formulas>
       <SimLayout visual={visual} controls={controls} />

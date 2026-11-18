@@ -207,7 +207,7 @@ function FallingSim() {
             ['\\qs{r_s}', 'the Schwarzschild radius'],
           ]}
           live={`\\text{at } \\qs{${num(Math.max(rF, 1.0001), 2)}}\\,r_s: \\quad \\sqrt{1 - 1/${num(Math.max(rF, 1.0001), 2)}} = ${num(hoverRate(Math.max(rF, 1.0001)), 3)}`}
-          liveNote="That's for a clock hovering there. The faller's clock runs slower still, as seen from afar, because it's also moving fast."
+          liveNote={`For this black hole, ${num(Math.max(rF, 1.0001), 2)} r_s is ${sci((Math.max(rF, 1.0001) * rs) / 1000, 3)}$ km from the centre. The rate is for a clock hovering there; the faller's clock runs slower still, as seen from afar, because it's also moving fast.`}
         />
         <Formula
           title="Spaghettification"

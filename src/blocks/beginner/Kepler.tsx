@@ -261,7 +261,7 @@ function KeplerSim() {
           say="The same law, rearranged. Measure how big an orbit is and how long it takes, and out comes the mass of whatever is in the middle, even if you can't see it."
           where={[['\\qm{M},\\ \\qs{r},\\ \\qt{T}', 'as above, all in SI units (kg, m, s)']]}
           live={`\\qm{M} = \\frac{4\\pi^2 (\\qs{${sci(body.a * sys.aSI)}})^3}{${sci(G)} \\times (\\qt{${sci(body.T * sys.TSI)}})^2} = \\qm{${sci(Mbody)}}\\ \\text{kg}`}
-          liveNote={`That's ${suns(Mbody) >= 0.01 ? `${num(suns(Mbody), suns(Mbody) < 10 ? 2 : 0)} Suns` : `${num(Mbody / 5.97e24, 0)} Earths`}.`}
+          liveNote={`That's ${suns(Mbody) >= 0.01 ? `${num(suns(Mbody), suns(Mbody) < 10 ? 2 : 0)} Suns` : `${num(Mbody / 5.97e24, 0)} Earths`}. Your guess is ${num(ratio, 2)} times that.`}
         />
       </Formulas>
       <SimLayout visual={visual} controls={controls} />
